@@ -19,7 +19,7 @@ class App extends Component{
 
   onButtonSubmit = () => {
     this.setState({hashtag : this.state.searchField})
-    fetch('http://localhost:4000/gettweets', {
+    fetch('https://enigmatic-ravine-24634.herokuapp.com/gettweets', {
       'method' : 'post',
       'headers' : {'Content-Type' : 'application/json'},
       'body' : JSON.stringify({
