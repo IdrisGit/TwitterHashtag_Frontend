@@ -7,10 +7,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 1.5rem;
   background-color: #96CCFF;
-  overflow: scroll;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+body::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
 }
