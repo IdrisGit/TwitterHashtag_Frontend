@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import SearchBox from './Components/SearchBox';
 import FeedCardList from './Components/FeedCardList';
+import LoadingScreen from './Components/LoadingScreen';
 import './App.css';
-
 class App extends Component{
   constructor(){
     super();
     this.state = {
       searchField : '',
       hashtag : '',
-      tweets : []
+      tweets : [],
+      isLoading : false
     }
   }
 
@@ -18,6 +19,7 @@ class App extends Component{
   }
 
   onButtonSubmit = () => {
+    this.setState({isLoading : true})
     this.setState({hashtag : this.state.searchField})
     fetch('https://enigmatic-ravine-24634.herokuapp.com/gettweets', {
       'method' : 'post',
@@ -29,14 +31,21 @@ class App extends Component{
     .then (response => response.json())
     .then (data => {
       this.setState({tweets : data})
-    }).catch(err => console.log(err))
+    }).then(() => this.setState({isLoading : false}))
+    .catch(err => console.log(err))
   }
 
   render(){
     return (
       <div>
         <SearchBox onInputChange = {this.onInputChange} onButtonSubmit = {this.onButtonSubmit} />
-        <FeedCardList tweets={this.state.tweets} />
+        {
+          this.state.isLoading &&
+          <LoadingScreen />
+        } {
+          !this.state.isLoading &&
+          <FeedCardList tweets={this.state.tweets} />
+        }
       </div>
     );
   }
